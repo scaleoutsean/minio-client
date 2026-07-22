@@ -1,16 +1,21 @@
-FROM golang:1.26-alpine as build
+FROM golang:1.26-alpine AS build
 
 LABEL maintainer="scaleoutSean <scaleoutsean@users.noreply.github.com>"
 
-ENV GOPATH /go
-ENV CGO_ENABLED 0
+ENV GOPATH=/go
+ENV CGO_ENABLED=0
 
 
 RUN apk add -U --no-cache ca-certificates
-RUN apk add -U curl
-RUN curl -s -q https://raw.githubusercontent.com/scaleoutseasn/minio-client/master/LICENSE -o /go/LICENSE
-RUN curl -s -q https://raw.githubusercontent.com/scaleoutseasn/minio-client/master/CREDITS -o /go/CREDITS
-RUN go install -v -ldflags "$(go run buildscripts/gen-ldflags.go)" "github.com/scaleoutseasn/minio-client@latest"
+RUN apk add -U git
+
+WORKDIR /src
+
+COPY . .
+
+RUN LDFLAGS="$(go run buildscripts/gen-ldflags.go 2>/dev/null || echo '-s -w')" && \
+	go build -v -trimpath -o /go/bin/mc -ldflags "$LDFLAGS" .
+RUN cp LICENSE /go/LICENSE && cp CREDITS /go/CREDITS
 
 FROM scratch
 

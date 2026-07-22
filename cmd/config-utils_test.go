@@ -57,9 +57,10 @@ func equalAssert(ok1, ok2 bool, t *testing.T) {
 
 // Tests valid and invalid secret keys.
 func TestValidSecretKeys(t *testing.T) {
-	equalAssert(isValidSecretKey("aaa"), false, t)
+	equalAssert(isValidSecretKey("a"), true, t)
 
 	equalAssert(isValidSecretKey(""), true, t)
+	equalAssert(isValidSecretKey("secret"), true, t)
 	equalAssert(isValidSecretKey("password"), true, t)
 	equalAssert(isValidSecretKey("password%%"), true, t)
 	equalAssert(isValidSecretKey("BYvgJM101sHngl2uzjXS/OBF/aMxAN06JrJ3qJlF"), true, t)

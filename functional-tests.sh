@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 #
 # Copyright (c) 2015-2024 MinIO, Inc.
 #
@@ -24,14 +25,17 @@
 # tests.
 #
 # * As mc functional tests, just run this script.  It uses mc executable binary
-#   in current working directory or in the path.  The tests uses play.min.io
-#   as MinIO server.
+#   in current working directory or in the path.  The tests uses http://localhost:27070
+#   as S3 server.
 #
 # * For other, call this script with environment variables MINT_MODE,
 #   MINT_DATA_DIR, SERVER_ENDPOINT, ACCESS_KEY, SECRET_KEY and ENABLE_HTTPS. It
 #   uses mc executable binary in current working directory and uses given MinIO
 #   server to run tests. MINT_MODE is set by mint to specify what category of
 #   tests to run.
+#   # You may need one run with MINT_MODE=1 to create data. 
+#   # Then below 
+#   MINT_MODE=0 MINT_DATA_DIR=/tmp/junk SERVER_ENDPOINT="localhost:27070" ACCESS_KEY="admin" SECRET_KEY="" ENABLE_HTTPS=0 DEBUG=0 ./functional-tests.sh
 #
 ################################################################################
 
@@ -62,10 +66,10 @@ if [ -n "$MINT_MODE" ]; then
 fi
 
 if [ -z "${SERVER_ENDPOINT+x}" ]; then
-	SERVER_ENDPOINT="play.min.io"
-	ACCESS_KEY="Q3AM3UQ867SPQQA43P2F"
-	SECRET_KEY="zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG"
-	ENABLE_HTTPS=1
+	SERVER_ENDPOINT="localhost:7070"
+	ACCESS_KEY="admin"
+	SECRET_KEY="secret"
+	ENABLE_HTTPS=0
 fi
 
 # If you want to run the complete site cleaning test, set this variable to true
@@ -90,8 +94,8 @@ if [ "$ENABLE_HTTPS" != "1" ]; then
 	ENDPOINT="http://$SERVER_ENDPOINT"
 fi
 
-SERVER_ALIAS="myminio"
-SERVER_ALIAS_TLS="myminio-ssl"
+SERVER_ALIAS="vgw"
+SERVER_ALIAS_TLS="vgw-ssl"
 
 BUCKET_NAME="mc-test-bucket-$RANDOM"
 WATCH_OUT_FILE="$WORK_DIR/watch.out-$RANDOM"
@@ -1126,6 +1130,7 @@ function __init__() {
 		echo "unable to get md5sum of $FILE_65_MB"
 		exit 1
 	fi
+	start_time=$(get_time)
 	assert_success "$start_time" "${FUNCNAME[0]}" mc_cmd alias set "${SERVER_ALIAS}" "$ENDPOINT" "$ACCESS_KEY" "$SECRET_KEY"
 	assert_success "$start_time" "${FUNCNAME[0]}" mc_cmd alias set "${SERVER_ALIAS_TLS}" "$ENDPOINT" "$ACCESS_KEY" "$SECRET_KEY"
 

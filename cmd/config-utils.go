@@ -26,7 +26,7 @@ var validAPIs = []string{"S3v4", "S3v2"}
 
 const (
 	accessKeyMinLen = 3
-	secretKeyMinLen = 8
+	secretKeyMinLen = 1
 )
 
 // isValidAccessKey - validate access key for right length.
