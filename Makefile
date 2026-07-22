@@ -10,6 +10,10 @@ TAG ?= "minio/mc:$(VERSION)"
 
 GOLANGCI = $(GOPATH)/bin/golangci-lint
 
+LINUX_AMD64_BIN := $(PWD)/minio-client-x64
+LINUX_ARM64_BIN := $(PWD)/minio-client-aarch64
+MINIO_CLIENT_BIN := $(PWD)/minio-client
+
 all: build
 
 checks:
@@ -63,6 +67,20 @@ verify:
 build: checks
 	@echo "Building mc binary to './mc'"
 	@GO111MODULE=on GOOS=$(TARGET_GOOS) GOARCH=$(TARGET_GOARCH) CGO_ENABLED=0 go build -trimpath -tags kqueue --ldflags "$(LDFLAGS)" -o $(PWD)/mc
+	@cp -f $(PWD)/mc $(MINIO_CLIENT_BIN)
+	@echo "Also wrote compatibility binary to './minio-client'"
+
+# Builds Linux binaries for common architectures using explicit filenames.
+build-linux-binaries: checks
+	@echo "Building Linux x64 binary to './minio-client-x64'"
+	@GO111MODULE=on GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -trimpath -tags kqueue --ldflags "$(LDFLAGS)" -o $(LINUX_AMD64_BIN)
+	@echo "Building Linux aarch64 binary to './minio-client-aarch64'"
+	@GO111MODULE=on GOOS=linux GOARCH=arm64 CGO_ENABLED=0 go build -trimpath -tags kqueue --ldflags "$(LDFLAGS)" -o $(LINUX_ARM64_BIN)
+
+# Alias targets for local fork workflows.
+build-linux: build-linux-binaries
+
+build-local: build build-linux-binaries
 
 # Builds mc and installs it to $GOPATH/bin.
 install: build
@@ -75,5 +93,8 @@ clean:
 	@find . -name '*.test' | xargs rm -fv
 	@find . -name '*~' | xargs rm -fv
 	@rm -rvf mc
+	@rm -rvf minio-client
+	@rm -rvf minio-client-x64
+	@rm -rvf minio-client-aarch64
 	@rm -rvf build
 	@rm -rvf release
