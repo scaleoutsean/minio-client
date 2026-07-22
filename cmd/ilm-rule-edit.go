@@ -22,11 +22,11 @@ import (
 
 	"github.com/minio/cli"
 	json "github.com/minio/colorjson"
-	"github.com/minio/mc/cmd/ilm"
-	"github.com/minio/mc/pkg/probe"
 	minio "github.com/minio/minio-go/v7"
 	"github.com/minio/minio-go/v7/pkg/lifecycle"
 	"github.com/minio/pkg/v3/console"
+	"github.com/scaleoutsean/minio-client/cmd/ilm"
+	"github.com/scaleoutsean/minio-client/pkg/probe"
 )
 
 var ilmEditCmd = cli.Command{

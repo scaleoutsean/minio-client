@@ -22,7 +22,7 @@ import (
 	"time"
 
 	"github.com/minio/cli"
-	"github.com/minio/mc/pkg/probe"
+	"github.com/scaleoutsean/minio-client/pkg/probe"
 )
 
 var shareListFlags = []cli.Flag{}

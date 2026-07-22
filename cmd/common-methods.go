@@ -34,7 +34,7 @@ import (
 	"golang.org/x/net/http/httpguts"
 
 	"github.com/dustin/go-humanize"
-	"github.com/minio/mc/pkg/probe"
+	"github.com/scaleoutsean/minio-client/pkg/probe"
 	"github.com/minio/minio-go/v7"
 	"github.com/minio/minio-go/v7/pkg/encrypt"
 	"github.com/minio/minio-go/v7/pkg/tags"

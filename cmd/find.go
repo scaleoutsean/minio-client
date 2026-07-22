@@ -34,7 +34,7 @@ import (
 	"github.com/dustin/go-humanize"
 	"github.com/google/shlex"
 	"github.com/minio/cli"
-	"github.com/minio/mc/pkg/probe"
+	"github.com/scaleoutsean/minio-client/pkg/probe"
 	"github.com/minio/pkg/v3/console"
 	"golang.org/x/text/unicode/norm"
 

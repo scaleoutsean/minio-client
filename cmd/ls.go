@@ -27,7 +27,7 @@ import (
 
 	"github.com/dustin/go-humanize"
 	json "github.com/minio/colorjson"
-	"github.com/minio/mc/pkg/probe"
+	"github.com/scaleoutsean/minio-client/pkg/probe"
 	"github.com/minio/pkg/v3/console"
 )
 

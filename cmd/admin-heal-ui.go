@@ -28,7 +28,7 @@ import (
 	"github.com/fatih/color"
 	json "github.com/minio/colorjson"
 	"github.com/minio/madmin-go/v3"
-	"github.com/minio/mc/pkg/probe"
+	"github.com/scaleoutsean/minio-client/pkg/probe"
 	"github.com/minio/pkg/v3/console"
 )
 

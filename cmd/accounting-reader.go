@@ -28,7 +28,7 @@ import (
 
 	"github.com/cheggaaa/pb"
 	json "github.com/minio/colorjson"
-	"github.com/minio/mc/pkg/probe"
+	"github.com/scaleoutsean/minio-client/pkg/probe"
 )
 
 // accounter keeps tabs of ongoing data transfer information.

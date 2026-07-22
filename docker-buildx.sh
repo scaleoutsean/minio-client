@@ -24,20 +24,17 @@ release=$(git describe --abbrev=0 --tags)
 
 docker buildx build --push --no-cache \
 	--build-arg RELEASE="${release}" \
-	-t "minio/mc:latest" \
-	-t "minio/mc:${release}" \
-	-t "quay.io/minio/mc:${release}" \
-	-t "quay.io/minio/mc:latest" \
-	--platform=linux/arm64,linux/amd64,linux/ppc64le \
+	-t "scaleoutsean/minio-client:latest" \
+	--platform=linux/arm64,linux/amd64 \
 	-f Dockerfile.release .
 
 docker buildx prune -f
 
 docker buildx build --push --no-cache \
 	--build-arg RELEASE="${release}" \
-	-t "minio/mc:${release}-cpuv1" \
-	-t "quay.io/minio/mc:${release}-cpuv1" \
-	--platform=linux/arm64,linux/amd64,linux/ppc64le \
+	-t "scaleoutsean/minio-client:${release}-cpuv1" \
+	-t "scaleoutsean/minio-client:${release}-cpuv1" \
+	--platform=linux/arm64,linux/amd64 \
 	-f Dockerfile.release.old_cpu .
 
 docker buildx prune -f

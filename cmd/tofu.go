@@ -39,7 +39,7 @@ import (
 	"strings"
 
 	"github.com/fatih/color"
-	"github.com/minio/mc/pkg/probe"
+	"github.com/scaleoutsean/minio-client/pkg/probe"
 )
 
 func marshalPublicKey(pub any) (publicKeyBytes []byte, e error) {

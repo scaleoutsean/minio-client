@@ -55,8 +55,8 @@ import (
 	"github.com/minio/minio-go/v7/pkg/tags"
 	"github.com/minio/pkg/v3/mimedb"
 
-	"github.com/minio/mc/pkg/deadlineconn"
-	"github.com/minio/mc/pkg/probe"
+	"github.com/scaleoutsean/minio-client/pkg/deadlineconn"
+	"github.com/scaleoutsean/minio-client/pkg/probe"
 )
 
 // S3Client construct
@@ -1566,7 +1566,7 @@ func (c *S3Client) listObjectWrapper(ctx context.Context, bucket, object string,
 
 	if isGoogle(c.targetURL.Host) {
 		// Google Cloud S3 layer doesn't implement ListObjectsV2 implementation
-		// https://github.com/minio/mc/issues/3073
+		// https://github.com/scaleoutsean/minio-client/issues/3073
 		return c.api.ListObjects(ctx, bucket, minio.ListObjectsOptions{Prefix: object, Recursive: isRecursive, UseV1: true, MaxKeys: maxKeys})
 	}
 	opts := minio.ListObjectsOptions{Prefix: object, Recursive: isRecursive, WithMetadata: metadata, MaxKeys: maxKeys}

@@ -38,7 +38,7 @@ import (
 	"github.com/minio/minio-go/v7"
 
 	jwtgo "github.com/golang-jwt/jwt/v4"
-	"github.com/minio/mc/pkg/probe"
+	"github.com/scaleoutsean/minio-client/pkg/probe"
 	"github.com/minio/pkg/v3/console"
 )
 

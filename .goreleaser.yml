@@ -22,19 +22,11 @@ builds:
   -
     goos:
       - linux
-      - darwin
       - windows
-      - freebsd
 
     goarch:
       - amd64
       - arm64
-      - arm
-      - ppc64le
-      - s390x
-
-    goarm:
-      - 7
 
     ignore:
       - goos: darwin
@@ -135,21 +127,6 @@ dockers:
     image_templates:
       - minio/mc:{{ .Tag }}
       - minio/mc:latest
-
-  -
-    goos: linux
-    goarch: ppc64le
-    dockerfile: Dockerfile.ppc64le.release
-    image_templates:
-      - minio/mc:{{ .Tag }}-ppc64le
-
-  -
-    goos: linux
-    goarch: s390x
-    dockerfile: Dockerfile.s390x.release
-    image_templates:
-      - minio/mc:{{ .Tag }}-s390x
-
   -
     goos: linux
     goarch: arm64
@@ -157,11 +134,3 @@ dockers:
     dockerfile: Dockerfile.arm64.release
     image_templates:
       - minio/mc:{{ .Tag }}-arm64
-
-  -
-    goos: linux
-    goarch: arm
-    goarm: '7'
-    dockerfile: Dockerfile.arm.release
-    image_templates:
-      - minio/mc:{{ .Tag }}-arm
