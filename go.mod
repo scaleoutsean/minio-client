@@ -1,6 +1,6 @@
 module github.com/scaleoutsean/minio-client
 
-go 1.26.5
+go 1.27
 
 // Install tools using 'go install tool'.
 tool (

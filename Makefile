@@ -12,6 +12,7 @@ GOLANGCI = $(GOPATH)/bin/golangci-lint
 
 LINUX_AMD64_BIN := $(PWD)/minio-client-x64
 LINUX_ARM64_BIN := $(PWD)/minio-client-aarch64
+WINDOWS_AMD64_BIN := $(PWD)/minio-client-windows-amd64.exe
 MINIO_CLIENT_BIN := $(PWD)/minio-client
 
 all: build
@@ -77,10 +78,16 @@ build-linux-binaries: checks
 	@echo "Building Linux aarch64 binary to './minio-client-aarch64'"
 	@GO111MODULE=on GOOS=linux GOARCH=arm64 CGO_ENABLED=0 go build -trimpath -tags kqueue --ldflags "$(LDFLAGS)" -o $(LINUX_ARM64_BIN)
 
+# Builds Windows binaries for common architectures using explicit filenames.
+build-windows-binaries: checks
+	@echo "Building Windows x64 binary to './minio-client-windows-amd64.exe'"
+	@GO111MODULE=on GOOS=windows GOARCH=amd64 CGO_ENABLED=0 go build -trimpath -tags kqueue --ldflags "$(LDFLAGS)" -o $(WINDOWS_AMD64_BIN)
+
 # Alias targets for local fork workflows.
 build-linux: build-linux-binaries
+build-windows: build-windows-binaries
 
-build-local: build build-linux-binaries
+build-local: build build-linux-binaries build-windows-binaries
 
 # Builds mc and installs it to $GOPATH/bin.
 install: build
@@ -96,5 +103,6 @@ clean:
 	@rm -rvf minio-client
 	@rm -rvf minio-client-x64
 	@rm -rvf minio-client-aarch64
+	@rm -rvf minio-client-windows-amd64.exe
 	@rm -rvf build
 	@rm -rvf release

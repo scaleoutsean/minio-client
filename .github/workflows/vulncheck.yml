@@ -6,6 +6,9 @@ on:
   push:
     branches:
       - master
+permissions:
+  contents: read
+
 jobs:
   vulncheck:
     name: Analysis
@@ -16,10 +19,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: 1.26.x
-      - name: Get official govulncheck
-        run: go install golang.org/x/vuln/cmd/govulncheck@latest
-        shell: bash
+          go-version-file: go.mod
+          cache: true
       - name: Run govulncheck
-        run: govulncheck ./...
-        shell: bash
+        run: go run golang.org/x/vuln/cmd/govulncheck@latest ./...
